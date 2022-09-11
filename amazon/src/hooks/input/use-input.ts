@@ -1,8 +1,8 @@
 import { ChangeEvent, useReducer } from 'react'
-import { InputState } from './models'
-import { Action } from '../shared/models'
-import { inputActions } from './models'
-import { ValidatorFn } from '../shared/utils/validation/models'
+import { InputState } from '../models'
+import { Action } from '../../shared/models'
+import { inputActions } from '../models'
+import { ValidatorFn } from '../../shared/utils/validation/models'
 
 const initialInputState: InputState = {
   text: '',

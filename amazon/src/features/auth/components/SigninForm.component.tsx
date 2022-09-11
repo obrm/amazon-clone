@@ -11,11 +11,48 @@ import {
   Divider
 } from '@mui/material'
 
+import { useInput } from '../../../hooks'
+import {
+  validateEmail,
+  validatePasswordLength
+} from '../../../shared/utils/validation'
+import { LoginUser } from './../model';
+
 const SigninForm: FC = () => {
+  const {
+    text: email,
+    shouldDisplayError: emailHasError,
+    textChangeHandler: emailChangeHandler,
+    textBlurHandler: emailBlurHandler,
+    textClearHandler: emailClearHandler
+  } = useInput(validateEmail)
+
+  const {
+    text: password,
+    shouldDisplayError: passwordHasError,
+    textChangeHandler: passwordChangeHandler,
+    textBlurHandler: passwordBlurHandler,
+    textClearHandler: passwordClearHandler
+  } = useInput(validatePasswordLength)
+
+
+  const clearForm = () => {
+    emailClearHandler()
+    passwordClearHandler()
+  }
+
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log('Clicked')
+    if (emailHasError || passwordHasError) return
+
+    if (!email || !password) return
+
+    const loginUser: LoginUser = { email, password };
+
+    console.log('Clicked', loginUser)
+
+    clearForm()
   }
 
   return (
@@ -43,6 +80,11 @@ const SigninForm: FC = () => {
               דואר אלקטרוני
             </InputLabel>
             <TextField
+              value={email}
+              onChange={emailChangeHandler}
+              onBlur={emailBlurHandler}
+              error={emailHasError}
+              helperText={emailHasError && !email ? 'דוא"ל הינו שדה חובה' : emailHasError && email ? 'כתובת הדוא"ל שגויה או לא חוקית' : ''}
               type='email'
               name='email'
               id='email'
@@ -57,6 +99,11 @@ const SigninForm: FC = () => {
               סיסמה
             </InputLabel>
             <TextField
+              value={password}
+              onChange={passwordChangeHandler}
+              onBlur={passwordBlurHandler}
+              error={passwordHasError}
+              helperText={passwordHasError ? 'סיסמה לא תקינה' : ''}
               type='password'
               name='password'
               id='password'
