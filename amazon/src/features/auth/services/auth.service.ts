@@ -14,7 +14,7 @@ const register = async (newUser: NewUser): Promise<DisplayUser | null> => {
 
 const login = async (
   user: LoginUser
-): Promise<{ jwt: Jwt; user: DisplayUser | null }> => {
+): Promise<{ jwt: Jwt, user: DisplayUser | null }> => {
   const response = await axios.post(
     `${process.env.REACT_APP_BASE_API}/auth/login`,
     user
