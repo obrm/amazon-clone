@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { FC, FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { FC, FormEvent, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Box,
   Grid,
@@ -9,15 +9,17 @@ import {
   Typography,
   Button,
   Divider,
+  CircularProgress
 } from '@mui/material'
 
-import { useInput } from '../../../hooks'
+import { useInput, useAppDispatch, useAppSelector } from '../../../hooks'
 import {
   validateEmail,
   validateNameLength,
   validatePasswordLength
 } from '../../../shared/utils/validation'
 import { NewUser } from './../model';
+import { register, reset } from './../authSlice';
 
 const RegistrationForm: FC = () => {
   const {
@@ -58,6 +60,22 @@ const RegistrationForm: FC = () => {
     confirmPasswordClearHandler()
   }
 
+  const dispatch = useAppDispatch()
+
+  const { isLoading, isSuccess } = useAppSelector((state) => state.auth)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(reset())
+      clearForm()
+      navigate('/signin')
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, isSuccess])
+
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -73,10 +91,10 @@ const RegistrationForm: FC = () => {
       password
     }
 
-    console.log('new user: ', newUser)
-
-    clearForm()
+    dispatch(register(newUser))
   }
+
+  if (isLoading) return <CircularProgress sx={{ marginTop: '64px' }} color='primary' />
 
   return (
     <Box
