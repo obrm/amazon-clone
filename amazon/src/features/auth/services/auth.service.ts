@@ -42,7 +42,6 @@ const verifyJwt = async (jwt: string): Promise<boolean> => {
 
   if (response.data) {
     const jwtExpirationMs = response.data.exp * 1000
-
     return jwtExpirationMs > Date.now()
   }
 

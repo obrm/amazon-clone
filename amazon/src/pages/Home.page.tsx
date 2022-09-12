@@ -1,6 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useNavigate } from 'react-router-dom';
-
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { logout } from '../features/auth/authSlice';
 
@@ -10,11 +8,8 @@ const HomePage = () => {
 
   const { user } = useAppSelector((state) => state.auth)
 
-  const navigate = useNavigate()
-
   const logoutHandler = () => {
     dispatch(logout())
-    navigate('/signin')
   }
 
   return <div>
