@@ -96,7 +96,7 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state) => {
         state.isLoading = false
         state.isError = true
-        state.user = null
+        state.jwt = null
         state.isAuthenticated = false
         state.user = null
       })
