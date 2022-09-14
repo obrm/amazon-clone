@@ -124,7 +124,7 @@ const RegistrationForm: FC = () => {
             onChange={nameChangeHandler}
             onBlur={nameBlurHandler}
             error={nameHasError}
-            helperText={nameHasError && !name ? 'יש להקליד שם' : nameHasError && name.length < 3 ? 'שם צריך להיות ארוך מ-2 תווים' : ''}
+            helperText={nameHasError && !name ? 'יש להזין שם' : nameHasError && name.length < 3 ? 'שם צריך להיות ארוך מ-2 תווים' : ''}
             type='text'
             name='name'
             id='name'
