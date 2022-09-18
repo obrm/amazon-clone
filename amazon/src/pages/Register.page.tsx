@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet'
+
 import { AuthLayout, RegistrationForm } from '../features/auth/components'
 
 const RegisterPage = () => {

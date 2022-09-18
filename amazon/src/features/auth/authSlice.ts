@@ -128,4 +128,5 @@ export const { reset } = authSlice.actions
 export const selectedUser = (state: RootState) => {
   return state.auth
 }
+
 export default authSlice.reducer

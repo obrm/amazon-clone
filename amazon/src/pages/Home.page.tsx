@@ -1,24 +1,30 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { useAppSelector, useAppDispatch } from "../hooks";
-import { logout } from '../features/auth/authSlice';
+import { useEffect } from 'react'
+
+import { Helmet } from 'react-helmet'
+
+import { getProducts } from '../features/products/productSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { Header } from './../features/products/components';
+import { Product } from './../features/products/components';
 
 const HomePage = () => {
+  const { products } = useAppSelector((state) => state.product)
 
   const dispatch = useAppDispatch()
 
-  const { user } = useAppSelector((state) => state.auth)
+  useEffect(() => {
+    dispatch(getProducts())
+  }, [dispatch])
 
-  const logoutHandler = () => {
-    dispatch(logout())
-  }
 
   return <div>
-    <h1>home page</h1>
-    <a onClick={logoutHandler} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
-      logout
-    </a>
-    <br />
-    {user?.email}
+    <Helmet>
+      <title>Amazon | בית</title>
+    </Helmet>
+    <Header />
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '48px', justifyContent: 'center', alignItems: 'center', marginTop: '48px' }}>
+      {products.length > 0 && products.map((product) => <Product key={product._id} product={product} />)}
+    </div>
   </div>
 }
 
