@@ -1,4 +1,3 @@
-import { useState } from 'react'
 
 import {
   Card,
@@ -10,7 +9,7 @@ import {
 } from '@mui/material'
 
 import { decrementProduct, incrementProduct } from '../productSlice'
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { ProductDocument } from './../models';
 
 interface ProductProps {
@@ -18,9 +17,18 @@ interface ProductProps {
 }
 
 const Product: React.FC<ProductProps> = ({ product }) => {
-  const [count, setCount] = useState(0)
 
   const dispatch = useAppDispatch()
+
+  const { cart } = useAppSelector((state) => state.product)
+
+  let qty = 0
+
+  const cartItem = cart.find((item) => item._id === product._id)
+
+  if (cartItem) {
+    qty = cartItem.quantity
+  }
 
   return <Card sx={{ width: 300, minWidth: 300 }}>
     <CardMedia component='img' height='140' image='https://via.placeholder.com/300.png/09f/fff'
@@ -38,21 +46,18 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     </CardContent>
     <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
       <Button onClick={() => {
-        setCount((prevCount: number) => {
-          if (prevCount === 0) return 0
-          return prevCount - 1
-        })
         dispatch(decrementProduct(product))
-      }} disabled={count === 0}
-        size='large'>
+      }} disabled={qty === 0}
+        size='large'
+        sx={{ fontWeight: 800 }}>
         -
       </Button>
-      <span>{count}</span>
+      <span>{qty}</span>
       <Button onClick={() => {
-        setCount((prevCount: number) => prevCount + 1)
         dispatch(incrementProduct(product))
       }}
-        size='large'>
+        size='large'
+        sx={{ fontWeight: 800 }}>
         +
       </Button>
     </CardActions>

@@ -11,8 +11,9 @@ import {
 
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
-import { useAppDispatch, useAppSelector } from "../../../hooks"
-import { logout, selectedUser } from "../../auth/authSlice"
+import { useAppDispatch, useAppSelector } from "../../hooks"
+import { logout, selectedUser } from "../../features/auth/authSlice"
+import { resetCart } from '../../features/products/productSlice';
 
 
 const Header = () => {
@@ -33,6 +34,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout())
+    dispatch(resetCart())
   }
 
   return (
@@ -46,7 +48,7 @@ const Header = () => {
               <Button onClick={logoutHandler} sx={{ padding: 0, justifyContent: 'start', fontWeight: 'bold' }} color='inherit'>יציאה</Button>
             </div>
             <Button onClick={() => navigate('/cart')}>
-              <Badge badgeContent={cartCount} color='primary'>
+              <Badge badgeContent={cartCount} color='primary' sx={{ marginRight: '16px' }}>
                 <ShoppingCartOutlinedIcon fontSize='large' />
               </Badge>
               <span style={{ color: '#ffffff', alignSelf: 'flex-end', fontWeight: 'bold' }}>עגלה</span>

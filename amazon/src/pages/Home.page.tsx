@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 
 import { getProducts } from '../features/products/productSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { Header } from './../features/products/components';
+import { Header } from '../shared/components';
 import { Product } from './../features/products/components';
 
 const HomePage = () => {

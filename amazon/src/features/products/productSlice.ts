@@ -77,6 +77,10 @@ export const productSlice = createSlice({
       )
       state.cart = modifiedCart
     },
+    resetCart: (state) => {
+      state.cart = []
+      localStorage.removeItem('cart')
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -96,6 +100,7 @@ export const productSlice = createSlice({
   },
 })
 
-export const { incrementProduct, decrementProduct } = productSlice.actions
+export const { incrementProduct, decrementProduct, resetCart } =
+  productSlice.actions
 
 export default productSlice.reducer

@@ -1,4 +1,4 @@
-import Header from './Header.component'
 import Product from './Product.component'
+import PaymentGateway from './Payment.component'
 
-export { Header, Product }
+export { Product, PaymentGateway }
